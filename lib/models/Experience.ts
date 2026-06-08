@@ -1,0 +1,11 @@
+import { Schema, model, models } from 'mongoose';
+
+const ExperienceSchema = new Schema({
+  company: { type: String, required: true },
+  role: { type: String, required: true },
+  duration: { type: String, required: true },
+  description: { type: String, default: '' },
+  order: { type: Number, default: 0 },
+}, { timestamps: true });
+
+export const Experience = models.Experience || model('Experience', ExperienceSchema);
