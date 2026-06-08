@@ -6,25 +6,12 @@ import ExperienceSection from '@/components/sections/ExperienceSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
+import { getPortfolioData } from '@/lib/data';
 
-async function getData() {
-  const base = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-  const headers = { 'Content-Type': 'application/json' };
-
-  const [hero, about, skills, experience, projects, contact] = await Promise.all([
-    fetch(`${base}/api/hero`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => ({})),
-    fetch(`${base}/api/about`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => ({})),
-    fetch(`${base}/api/skills`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => []),
-    fetch(`${base}/api/experience`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => []),
-    fetch(`${base}/api/projects`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => []),
-    fetch(`${base}/api/contact`, { next: { revalidate: 60 }, headers }).then((r) => r.json()).catch(() => ({})),
-  ]);
-
-  return { hero, about, skills, experience, projects, contact };
-}
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const { hero, about, skills, experience, projects, contact } = await getData();
+  const { hero, about, skills, experience, projects, contact } = await getPortfolioData();
 
   return (
     <>
