@@ -20,12 +20,11 @@ export default function AdminLoginPage() {
       password: form.password,
       redirect: false,
     });
-    setLoading(false);
     if (result?.error) {
       setError('Invalid credentials. Please try again.');
+      setLoading(false);
     } else {
-      router.push('/admin');
-      router.refresh();
+      window.location.href = '/admin';
     }
   };
 
