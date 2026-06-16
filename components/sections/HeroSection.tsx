@@ -97,7 +97,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
 
         {/* Profile Photo */}
         <div className="animate-float relative">
-          <div className="relative w-64 h-64 md:w-80 md:h-80">
+          <div className="relative w-64 h-60 md:w-80 md:h-90">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/30 to-purple-600/30 blur-2xl" />
             <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
               {data.profilePhoto ? (
