@@ -6,6 +6,12 @@ import { Experience } from '@/lib/models/Experience';
 import { Project } from '@/lib/models/Project';
 import { Contact } from '@/lib/models/Contact';
 
+// Convert Mongoose/BSON types (ObjectId, Date) into plain JSON values so the
+// result can be passed from this Server Component into Client Components.
+function serialize<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}
+
 export async function getPortfolioData() {
   try {
     await connectDB();
@@ -19,14 +25,14 @@ export async function getPortfolioData() {
       Contact.findOne().lean().catch(() => ({})),
     ]);
 
-    return {
+    return serialize({
       hero: hero ?? {},
       about: about ?? {},
       skills: skills ?? [],
       experience: experience ?? [],
       projects: projects ?? [],
       contact: contact ?? {},
-    };
+    });
   } catch {
     return { hero: {}, about: {}, skills: [], experience: [], projects: [], contact: {} };
   }

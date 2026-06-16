@@ -13,7 +13,7 @@ export async function GET() {
     return NextResponse.json(hero);
   } catch (error) {
     console.error('GET /api/hero error:', error);
-    return NextResponse.json({ error: 'Failed to fetch hero', detail: String(error) }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch hero' }, { status: 500 });
   }
 }
 
