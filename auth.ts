@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -10,14 +11,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const adminEmail = process.env.ADMIN_EMAIL;
-        const adminPassword = process.env.ADMIN_PASSWORD;
+        const email = typeof credentials?.email === 'string' ? credentials.email : '';
+        const password = typeof credentials?.password === 'string' ? credentials.password : '';
 
-        if (
-          credentials?.email === adminEmail &&
-          credentials?.password === adminPassword
-        ) {
-          return { id: '1', name: 'Admin', email: adminEmail as string };
+        const adminEmail = process.env.ADMIN_EMAIL;
+        const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+
+        if (!adminEmail || !adminPasswordHash) {
+          console.error('Auth not configured: set ADMIN_EMAIL and ADMIN_PASSWORD_HASH');
+          return null;
+        }
+
+        const emailMatches = email.toLowerCase() === adminEmail.toLowerCase();
+        // Always run bcrypt.compare so response timing doesn't reveal whether the email was valid.
+        const passwordMatches = await bcrypt.compare(password, adminPasswordHash);
+
+        if (emailMatches && passwordMatches) {
+          return { id: '1', name: 'Admin', email: adminEmail };
         }
         return null;
       },
