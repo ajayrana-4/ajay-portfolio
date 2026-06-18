@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { Mail, Download, ArrowRight } from 'lucide-react';
+import { Mail, Download, ArrowRight, Briefcase } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons';
 
 interface HeroData {
@@ -22,13 +22,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
       <div className="gradient-orb w-[400px] h-[400px] bg-purple-600/8 bottom-0 right-0 absolute" />
 
       {/* Grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)`,
-          backgroundSize: '64px 64px',
-        }}
-      />
+      <div className="hero-grid absolute inset-0 opacity-[0.03]" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-32 flex flex-col md:flex-row items-center gap-16">
         {/* Text */}
@@ -46,7 +40,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
             {data.title || 'AI Engineer'}
           </p>
 
-          <p className="text-gray-400 text-lg leading-relaxed max-w-xl mb-10 animate-fade-in-up delay-200">
+          <p className="text-gray-400 text-lg leading-relaxed max-w-xl mb-10 animate-fade-in-up delay-200 whitespace-pre-wrap break-words">
             {data.introduction || 'Building intelligent systems with cutting-edge AI & GenAI technologies.'}
           </p>
 
@@ -57,6 +51,10 @@ export default function HeroSection({ data }: { data: HeroData }) {
                 Download Resume
               </a>
             )}
+            <a href="#experience" className="btn-secondary">
+              <Briefcase size={16} />
+              View Work
+            </a>
             <a href="#projects" className="btn-secondary">
               View Projects <ArrowRight size={16} />
             </a>
@@ -69,6 +67,8 @@ export default function HeroSection({ data }: { data: HeroData }) {
                 href={data.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
                 className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500 transition-all duration-200 hover:-translate-y-0.5"
               >
                 <GithubIcon size={18} />
@@ -79,6 +79,8 @@ export default function HeroSection({ data }: { data: HeroData }) {
                 href={data.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                title="LinkedIn"
                 className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500 transition-all duration-200 hover:-translate-y-0.5"
               >
                 <LinkedinIcon size={18} />
@@ -87,6 +89,8 @@ export default function HeroSection({ data }: { data: HeroData }) {
             {data.email && (
               <a
                 href={`mailto:${data.email}`}
+                aria-label="Email"
+                title="Email"
                 className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-indigo-500 transition-all duration-200 hover:-translate-y-0.5"
               >
                 <Mail size={18} />
