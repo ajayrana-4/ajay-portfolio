@@ -39,7 +39,7 @@ export default function ExperienceSection({ data }: { data: ExperienceData[] }) 
                       {exp.duration}
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm leading-relaxed">{exp.description}</p>
+                  <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap break-words">{exp.description}</p>
                 </div>
               </div>
             ))}

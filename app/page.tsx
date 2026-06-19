@@ -19,8 +19,8 @@ export default async function HomePage() {
       <main>
         <HeroSection data={hero} />
         <AboutSection data={about} />
-        <SkillsSection data={skills} />
         <ExperienceSection data={experience} />
+        <SkillsSection data={skills} />
         <ProjectsSection data={projects} />
         <ContactSection data={contact} />
       </main>

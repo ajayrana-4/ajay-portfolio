@@ -1,4 +1,6 @@
-import { Target } from 'lucide-react';
+'use client';
+import { useState } from 'react';
+import { Target, ChevronDown } from 'lucide-react';
 
 interface AboutData {
   heading: string;
@@ -6,11 +8,19 @@ interface AboutData {
   focusAreas: string[];
 }
 
+const FOCUS_LIMIT = 5;
+
 export default function AboutSection({ data }: { data: AboutData }) {
+  const [showAllFocus, setShowAllFocus] = useState(false);
+
+  const focusAreas = data.focusAreas || [];
+  const visibleFocus = showAllFocus ? focusAreas : focusAreas.slice(0, FOCUS_LIMIT);
+  const hasMoreFocus = focusAreas.length > FOCUS_LIMIT;
+
   return (
     <section id="about" className="section">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
           {/* Left: Text */}
           <div>
             <p className="text-indigo-400 font-semibold text-sm tracking-widest uppercase mb-3">Who I Am</p>
@@ -31,7 +41,7 @@ export default function AboutSection({ data }: { data: AboutData }) {
               <h3 className="font-semibold text-white">Current Focus</h3>
             </div>
             <div className="flex flex-col gap-3">
-              {(data.focusAreas || []).map((area, i) => (
+              {visibleFocus.map((area, i) => (
                 <div
                   key={i}
                   className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-indigo-500/30 transition-colors"
@@ -40,10 +50,24 @@ export default function AboutSection({ data }: { data: AboutData }) {
                   <span className="text-gray-300 text-sm">{area}</span>
                 </div>
               ))}
-              {(!data.focusAreas || data.focusAreas.length === 0) && (
+              {focusAreas.length === 0 && (
                 <p className="text-gray-500 text-sm">No focus areas added yet.</p>
               )}
             </div>
+
+            {hasMoreFocus && (
+              <button
+                type="button"
+                onClick={() => setShowAllFocus((prev) => !prev)}
+                className="mt-5 flex items-center gap-1.5 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
+              >
+                {showAllFocus ? 'Show less' : `Show ${focusAreas.length - FOCUS_LIMIT} more`}
+                <ChevronDown
+                  size={15}
+                  className={`transition-transform ${showAllFocus ? 'rotate-180' : ''}`}
+                />
+              </button>
+            )}
           </div>
         </div>
       </div>
