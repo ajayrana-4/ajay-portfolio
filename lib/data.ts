@@ -20,7 +20,7 @@ export async function getPortfolioData() {
       Hero.findOne().lean().catch(() => ({})),
       About.findOne().lean().catch(() => ({})),
       Skill.find().sort({ category: 1, order: 1 }).lean().catch(() => []),
-      Experience.find().sort({ order: 1 }).lean().catch(() => []),
+      Experience.find().sort({ createdAt: -1 }).lean().catch(() => []),
       Project.find().sort({ order: 1 }).lean().catch(() => []),
       Contact.findOne().lean().catch(() => ({})),
     ]);

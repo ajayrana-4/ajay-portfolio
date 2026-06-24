@@ -3,6 +3,7 @@ import { MapPin, Calendar } from 'lucide-react';
 interface ExperienceData {
   _id: string;
   company: string;
+  industry: string;
   role: string;
   location: string;
   duration: string;
@@ -34,7 +35,10 @@ export default function ExperienceSection({ data }: { data: ExperienceData[] }) 
                     <div>
                       <h3 className="font-semibold text-white text-lg">{exp.role}</h3>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <p className="text-indigo-400 font-medium text-sm">{exp.company}</p>
+                        <p className="text-indigo-400 font-medium text-sm">
+                          {exp.company}
+                          {exp.industry && <span className="text-gray-500 font-normal"> – {exp.industry}</span>}
+                        </p>
                         {exp.location && (
                           <span className="flex items-center gap-1 text-gray-500 text-xs">
                             <MapPin size={12} />

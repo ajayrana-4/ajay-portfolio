@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 
-interface Experience { _id: string; company: string; role: string; location: string; duration: string; description: string; }
+interface Experience { _id: string; company: string; industry: string; role: string; location: string; duration: string; description: string; }
 type FormState = Omit<Experience, '_id'>;
 
-const empty: FormState = { company: '', role: '', location: '', duration: '', description: '' };
+const empty: FormState = { company: '', industry: '', role: '', location: '', duration: '', description: '' };
 
 export default function AdminExperiencePage() {
   const [items, setItems] = useState<Experience[]>([]);
@@ -35,7 +35,7 @@ export default function AdminExperiencePage() {
   };
 
   const startEdit = (item: Experience) => {
-    setForm({ company: item.company, role: item.role, location: item.location, duration: item.duration, description: item.description });
+    setForm({ company: item.company, industry: item.industry, role: item.role, location: item.location, duration: item.duration, description: item.description });
     setEditId(item._id); setShowForm(true);
   };
 
@@ -68,19 +68,23 @@ export default function AdminExperiencePage() {
               <input className="form-input" value={form.company} onChange={e => setForm({...form, company: e.target.value})} placeholder="Company Name" />
             </div>
             <div>
-              <label className="form-label">Role</label>
-              <input className="form-input" value={form.role} onChange={e => setForm({...form, role: e.target.value})} placeholder="Senior AI Engineer" />
+              <label className="form-label">Industry</label>
+              <input className="form-input" value={form.industry} onChange={e => setForm({...form, industry: e.target.value})} placeholder="Ad Tech / Fintech" />
             </div>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
+              <label className="form-label">Role</label>
+              <input className="form-input" value={form.role} onChange={e => setForm({...form, role: e.target.value})} placeholder="Senior AI Engineer" />
+            </div>
+            <div>
               <label className="form-label">Location</label>
               <input className="form-input" value={form.location} onChange={e => setForm({...form, location: e.target.value})} placeholder="Bengaluru, India / Remote" />
             </div>
-            <div>
-              <label className="form-label">Duration</label>
-              <input className="form-input" value={form.duration} onChange={e => setForm({...form, duration: e.target.value})} placeholder="Jan 2023 – Present" />
-            </div>
+          </div>
+          <div>
+            <label className="form-label">Duration</label>
+            <input className="form-input" value={form.duration} onChange={e => setForm({...form, duration: e.target.value})} placeholder="Jan 2023 – Present" />
           </div>
           <div>
             <label className="form-label">Description</label>
@@ -104,11 +108,11 @@ export default function AdminExperiencePage() {
             >
               <div>
                 <p className="font-semibold text-white text-sm">{item.role}</p>
-                <p className="text-indigo-400 text-xs mt-0.5">{item.company}{item.location ? ` · ${item.location}` : ''} · {item.duration}</p>
+                <p className="text-indigo-400 text-xs mt-0.5">{item.company}{item.industry ? ` – ${item.industry}` : ''}{item.location ? ` · ${item.location}` : ''} · {item.duration}</p>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={e => { e.stopPropagation(); startEdit(item); }} className="p-1.5 rounded text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Pencil size={13} /></button>
-                <button onClick={e => { e.stopPropagation(); handleDelete(item._id); }} className="p-1.5 rounded text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={13} /></button>
+                <button aria-label="Edit experience" title="Edit" onClick={e => { e.stopPropagation(); startEdit(item); }} className="p-1.5 rounded text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Pencil size={13} /></button>
+                <button aria-label="Delete experience" title="Delete" onClick={e => { e.stopPropagation(); handleDelete(item._id); }} className="p-1.5 rounded text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={13} /></button>
                 {expanded === item._id ? <ChevronUp size={15} className="text-gray-500" /> : <ChevronDown size={15} className="text-gray-500" />}
               </div>
             </div>

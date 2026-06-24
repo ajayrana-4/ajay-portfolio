@@ -6,7 +6,7 @@ import { auth } from '@/auth';
 export async function GET() {
   try {
     await connectDB();
-    const experiences = await Experience.find().sort({ order: 1 });
+    const experiences = await Experience.find().sort({ createdAt: -1 });
     return NextResponse.json(experiences);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch experiences' }, { status: 500 });
