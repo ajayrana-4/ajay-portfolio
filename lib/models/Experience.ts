@@ -3,6 +3,7 @@ import { Schema, model, models } from 'mongoose';
 const ExperienceSchema = new Schema({
   company: { type: String, required: true },
   role: { type: String, required: true },
+  location: { type: String, default: '' },
   duration: { type: String, required: true },
   description: { type: String, default: '' },
   order: { type: Number, default: 0 },

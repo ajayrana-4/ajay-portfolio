@@ -4,6 +4,7 @@ interface ExperienceData {
   _id: string;
   company: string;
   role: string;
+  location: string;
   duration: string;
   description: string;
 }
@@ -32,7 +33,15 @@ export default function ExperienceSection({ data }: { data: ExperienceData[] }) 
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
                     <div>
                       <h3 className="font-semibold text-white text-lg">{exp.role}</h3>
-                      <p className="text-indigo-400 font-medium text-sm">{exp.company}</p>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <p className="text-indigo-400 font-medium text-sm">{exp.company}</p>
+                        {exp.location && (
+                          <span className="flex items-center gap-1 text-gray-500 text-xs">
+                            <MapPin size={12} />
+                            {exp.location}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex items-center gap-1.5 text-gray-500 text-xs whitespace-nowrap">
                       <Calendar size={13} />
