@@ -20,7 +20,7 @@ export default function AboutSection({ data }: { data: AboutData }) {
   return (
     <section id="about" className="section">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-start">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Left: Text */}
           <div>
             <p className="text-indigo-400 font-semibold text-sm tracking-widest uppercase mb-3">Who I Am</p>
